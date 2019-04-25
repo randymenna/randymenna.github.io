@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 199.09 260.5" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="c" x="-.029138" y="-.13611" width="1.0583" height="1.2722" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="1.110852"/>
+  </filter>
+  <filter id="d" x="-.26697" y="-.21798" width="1.5339" height="1.436" color-interpolation-filters="sRGB">
+   <feGaussianBlur stdDeviation="2.279262"/>
+  </filter>
+ </defs>
+ <g fill-rule="evenodd">
+  <g fill="#003f7f">
+   <path d="m16.946 11.823l23.398 14.832 158.4-15.758-32.22-10.896-149.58 11.823z" opacity=".8"/>
+   <path d="m191.33 213.04l-142.8 35.236-8.3454-221.62 158.56-15.764-7.4181 202.14z" opacity=".8"/>
+   <path d="m48.898 248.3l-23.469-36.189-8.4247-200.29 23.402 14.836 8.492 221.64z" opacity=".85"/>
+  </g>
+  <path d="m44.036 214.43a13.548 24.118 0 1 1 -27.096 18.399 13.548 24.118 0 1 1 27.096 -18.399z" fill="#a9a9a9" filter="url(#d)"/>
+  <path d="m23.9 213.55l23.993 36.453 146.3-36.888-170.3 0.4347z" fill="#696969" filter="url(#c)"/>
+  <path d="m192.73 174.62l-1.4306 38.423-142.74 35.208-1.579-42.243 145.75-31.388z" fill="#dcdcdc"/>
+  <path d="m48.567 248.25l-23.211-35.079-1.5454-39.406 23.179 32.236 1.5776 42.248z" fill="#c0c0c0"/>
+  <path d="m198.52 16.926l-1.6776 45.766-154.34 18.802-1.957-49.72 157.97-14.849z" fill="#dcdcdc"/>
+  <path d="m42.508 81.494l-23.364-18.049-1.9566-47.245 23.401 15.576 1.9192 49.718z" fill="#c0c0c0"/>
+ </g>
+ <g stroke-linejoin="round">
+  <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="48.764" y="146.21" width="22.262" height="9.3543" fill="#ccc" stroke="#666" stroke-width=".113"/>
+  <g stroke="#0e0101">
+   <g stroke-width=".024">
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="50.615" y="146.96" width=".28508" height="7.1565"/>
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="51.117" y="146.96" width=".28508" height="7.1565"/>
+   </g>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="52.12" y="146.96" width=".28639" height="6.3628" stroke-width=".022"/>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="52.63" y="146.96" width=".57007" height="6.3575" stroke-width=".032"/>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="53.623" y="146.96" width=".19343" height="6.3651" stroke-width=".018"/>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="54.638" y="146.96" width=".57007" height="6.3575" stroke-width=".032"/>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="55.64" y="146.96" width=".47497" height="6.3591" stroke-width=".029"/>
+   <g stroke-width=".018">
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="56.635" y="146.96" width=".19343" height="6.3651"/>
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="57.137" y="146.96" width=".19343" height="6.3651"/>
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="57.639" y="146.96" width=".19343" height="6.3651"/>
+   </g>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="58.657" y="146.96" width=".66554" height="6.356" stroke-width=".034"/>
+   <g stroke-width=".022">
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="60.051" y="146.96" width=".28638" height="6.3628"/>
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="60.553" y="146.96" width=".28638" height="6.3628"/>
+   </g>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="61.316" y="146.96" width=".66554" height="6.356" stroke-width=".034"/>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="63.057" y="146.96" width=".19343" height="6.3651" stroke-width=".018"/>
+   <g stroke-width=".02">
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="63.56" y="146.96" width=".19312" height="7.1591"/>
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="64.061" y="146.96" width=".19312" height="7.1591"/>
+   </g>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="65.065" y="146.96" width=".19343" height="6.3651" stroke-width=".018"/>
+   <g stroke-width=".032">
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="65.579" y="146.96" width=".57007" height="6.3575"/>
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="66.583" y="146.96" width=".57007" height="6.3575"/>
+   </g>
+   <g stroke-width=".018">
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="67.477" y="146.96" width=".18464" height="6.3711"/>
+    <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="67.978" y="146.96" width=".18464" height="6.3711"/>
+   </g>
+   <rect transform="matrix(.50945 .8605 .024266 .99971 0 0)" x="68.487" y="146.96" width=".57007" height="6.3575" stroke-width=".032"/>
+  </g>
+ </g>
+</svg>

@@ -837,25 +837,50 @@ module.exports = webpackAsyncContext;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./login/login.module": [
-		"./src/app/login/login.module.ts",
-		"login-login-module"
+	"./catalogs/catalogs-page.module": [
+		"./src/app/components/tabs/catalogs/catalogs-page.module.ts",
+		"common",
+		"catalogs-catalogs-page-module"
 	],
-	"./tab1/tab1.module": [
-		"./src/app/tabs/tab1/tab1.module.ts",
-		"tab1-tab1-module"
+	"./components/login/login.module": [
+		"./src/app/components/login/login.module.ts",
+		"common",
+		"components-login-login-module"
+	],
+	"./components/register/register.module": [
+		"./src/app/components/register/register.module.ts",
+		"common",
+		"components-register-register-module"
+	],
+	"./components/tabs/tabs.module": [
+		"./src/app/components/tabs/tabs.module.ts",
+		"common",
+		"components-tabs-tabs-module"
+	],
+	"./edit-item/edit-item-page.module": [
+		"./src/app/components/tabs/edit-item/edit-item-page.module.ts",
+		"common",
+		"edit-item-edit-item-page-module"
+	],
+	"./items/items.module": [
+		"./src/app/components/tabs/items/items.module.ts",
+		"common",
+		"items-items-module"
+	],
+	"./new-catalog/new-catalog-page.module": [
+		"./src/app/components/tabs/new-catalog/new-catalog-page.module.ts",
+		"common",
+		"new-catalog-new-catalog-page-module"
 	],
 	"./tab2/tab2.module": [
-		"./src/app/tabs/tab2/tab2.module.ts",
+		"./src/app/components/tabs/tab2/tab2.module.ts",
+		"common",
 		"tab2-tab2-module"
 	],
 	"./tab3/tab3.module": [
-		"./src/app/tabs/tab3/tab3.module.ts",
+		"./src/app/components/tabs/tab3/tab3.module.ts",
+		"common",
 		"tab3-tab3-module"
-	],
-	"./tabs/tabs.module": [
-		"./src/app/tabs/tabs.module.ts",
-		"tabs-tabs-module"
 	]
 };
 function webpackAsyncContext(req) {
@@ -867,7 +892,7 @@ function webpackAsyncContext(req) {
 			throw e;
 		});
 	}
-	return __webpack_require__.e(ids[1]).then(function() {
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
 		var id = ids[0];
 		return __webpack_require__(id);
 	});
@@ -897,9 +922,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [
-    { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
-    { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
-    { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
+    { path: '', loadChildren: './components/login/login.module#LoginPageModule' },
+    { path: 'app', loadChildren: './components/tabs/tabs.module#TabsPageModule' },
+    { path: 'login', loadChildren: './components/login/login.module#LoginPageModule' },
+    { path: 'register', loadChildren: './components/register/register.module#RegisterPageModule' },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -907,7 +933,8 @@ var AppRoutingModule = /** @class */ (function () {
     AppRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             imports: [
-                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes, { preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_2__["PreloadAllModules"] })
+                // RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes),
             ],
             exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]]
         })
@@ -943,25 +970,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "./node_modules/@ionic/angular/dist/fesm5.js");
-/* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/ngx/index.js");
-/* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/ngx/index.js");
+/* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+
+
 
 
 
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent(platform, splashScreen, statusBar) {
+    function AppComponent(platform, splashScreen, statusBar, events, translate, router) {
         this.platform = platform;
         this.splashScreen = splashScreen;
         this.statusBar = statusBar;
+        this.events = events;
+        this.translate = translate;
+        this.router = router;
         this.initializeApp();
     }
     AppComponent.prototype.initializeApp = function () {
         var _this = this;
+        this.translate.setDefaultLang('en');
+        this.translate.use('en');
+        this.translate.onLangChange.subscribe(function (event) {
+            console.log('lang changed detected', event);
+            _this.translate.setDefaultLang(event.lang);
+        });
         this.platform.ready().then(function () {
             _this.statusBar.styleDefault();
             _this.splashScreen.hide();
+            _this.events.subscribe('session:expired', function () {
+                _this.router.navigate(['login']);
+            });
         });
     };
     AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -970,8 +1013,11 @@ var AppComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html")
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Platform"],
-            _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_3__["SplashScreen"],
-            _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_4__["StatusBar"]])
+            _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_4__["SplashScreen"],
+            _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_5__["StatusBar"],
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_2__["Events"],
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -1000,14 +1046,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_native_splash_screen_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/splash-screen/ngx */ "./node_modules/@ionic-native/splash-screen/ngx/index.js");
 /* harmony import */ var _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic-native/status-bar/ngx */ "./node_modules/@ionic-native/status-bar/ngx/index.js");
 /* harmony import */ var _ionic_native_barcode_scanner_ngx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic-native/barcode-scanner/ngx */ "./node_modules/@ionic-native/barcode-scanner/ngx/index.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm5/ngx-translate-http-loader.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
 /* harmony import */ var _store_store_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./store/store.module */ "./src/app/store/store.module.ts");
 /* harmony import */ var _services_sandboxes_sandboxes_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./services/sandboxes/sandboxes.module */ "./src/app/services/sandboxes/sandboxes.module.ts");
 /* harmony import */ var _services_async_services_async_services_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./services/async-services/async-services.module */ "./src/app/services/async-services/async-services.module.ts");
 /* harmony import */ var _services_native_services_native_services_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./services/native-services/native-services.module */ "./src/app/services/native-services/native-services.module.ts");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _fortawesome_angular_fontawesome__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @fortawesome/angular-fontawesome */ "./node_modules/@fortawesome/angular-fontawesome/fesm5/angular-fontawesome.js");
+/* harmony import */ var _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @fortawesome/fontawesome-svg-core */ "./node_modules/@fortawesome/fontawesome-svg-core/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @fortawesome/free-regular-svg-icons */ "./node_modules/@fortawesome/free-regular-svg-icons/index.es.js");
+/* harmony import */ var _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @fortawesome/free-brands-svg-icons */ "./node_modules/@fortawesome/free-brands-svg-icons/index.es.js");
+/* harmony import */ var _loaders_TranslateUinversalLoader__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./loaders/TranslateUinversalLoader */ "./src/app/loaders/TranslateUinversalLoader.ts");
+
+
+
+
+
 
 
 
@@ -1026,15 +1083,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // AoT requires an exported function for factories
-function createTranslateLoader(http) {
-    return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_10__["TranslateHttpLoader"](http, './assets/i18n/', '.json');
+
+function createTranslateLoader() {
+    return new _loaders_TranslateUinversalLoader__WEBPACK_IMPORTED_MODULE_22__["TranslateUniversalLoader"]();
 }
+_fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_18__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_19__["fas"], _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_20__["far"], _fortawesome_free_brands_svg_icons__WEBPACK_IMPORTED_MODULE_21__["fab"]);
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_16__["AppComponent"]],
+            declarations: [
+                _app_component__WEBPACK_IMPORTED_MODULE_16__["AppComponent"]
+            ],
             entryComponents: [],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["BrowserModule"],
@@ -1045,13 +1106,15 @@ var AppModule = /** @class */ (function () {
                 _services_async_services_async_services_module__WEBPACK_IMPORTED_MODULE_13__["AsyncServicesModule"].forRoot(),
                 _services_native_services_native_services_module__WEBPACK_IMPORTED_MODULE_14__["NativeServicesModule"].forRoot(),
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
-                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__["TranslateModule"].forRoot({
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateModule"].forRoot({
                     loader: {
-                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__["TranslateLoader"],
+                        provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__["TranslateLoader"],
                         useFactory: (createTranslateLoader),
-                        deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]]
                     }
-                })
+                }),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ReactiveFormsModule"],
+                _fortawesome_angular_fontawesome__WEBPACK_IMPORTED_MODULE_17__["FontAwesomeModule"],
             ],
             providers: [
                 _ionic_native_status_bar_ngx__WEBPACK_IMPORTED_MODULE_7__["StatusBar"],
@@ -1082,13 +1145,45 @@ __webpack_require__.r(__webpack_exports__);
 var config = {
     server: {
         user: {
-            kind: {
-                merchant: 'Merchant',
-                user: 'Merchant'
+            type: {
+                merchant: 'merchant',
+                user: 'user'
             }
         }
     }
 };
+
+
+/***/ }),
+
+/***/ "./src/app/loaders/TranslateUinversalLoader.ts":
+/*!*****************************************************!*\
+  !*** ./src/app/loaders/TranslateUinversalLoader.ts ***!
+  \*****************************************************/
+/*! exports provided: TranslateUniversalLoader */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TranslateUniversalLoader", function() { return TranslateUniversalLoader; });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _assets_i18n_en_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../assets/i18n/en.json */ "./src/assets/i18n/en.json");
+var _assets_i18n_en_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../assets/i18n/en.json */ "./src/assets/i18n/en.json", 1);
+
+// declare module '*.json' { export default '' as any; }
+
+var TRANSLATIONS = {
+    en: _assets_i18n_en_json__WEBPACK_IMPORTED_MODULE_1___namespace,
+};
+var TranslateUniversalLoader = /** @class */ (function () {
+    function TranslateUniversalLoader() {
+    }
+    TranslateUniversalLoader.prototype.getTranslation = function (lang) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])(TRANSLATIONS[lang].default);
+    };
+    return TranslateUniversalLoader;
+}());
+
 
 
 /***/ }),
@@ -1113,6 +1208,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _message_service_message_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./message-service/message.service */ "./src/app/services/async-services/message-service/message.service.ts");
 /* harmony import */ var _http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./http-cancel-service/http-cancel.service */ "./src/app/services/async-services/http-cancel-service/http-cancel.service.ts");
 /* harmony import */ var _async_services_sandbox__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./async-services.sandbox */ "./src/app/services/async-services/async-services.sandbox.ts");
+/* harmony import */ var _app_services_async_services_mock_api_service_mock_api_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @app/services/async-services/mock-api-service/mock.api.service */ "./src/app/services/async-services/mock-api-service/mock.api.service.ts");
+/* harmony import */ var _app_services_async_services_iapi_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @app/services/async-services/iapi.service */ "./src/app/services/async-services/iapi.service.ts");
 
 
 
@@ -1123,6 +1220,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// @ts-ignore
+
+// @ts-ignore
+
+var mock = true;
+var apiServiceClass = (mock) ? _app_services_async_services_mock_api_service_mock_api_service__WEBPACK_IMPORTED_MODULE_10__["MockApiService"] : _ora_api_service_ora_api_service__WEBPACK_IMPORTED_MODULE_6__["OraAPIService"];
 var AsyncServicesModule = /** @class */ (function () {
     function AsyncServicesModule() {
     }
@@ -1132,7 +1235,7 @@ var AsyncServicesModule = /** @class */ (function () {
             ngModule: AsyncServicesModule_1,
             providers: [
                 _auth_service_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"],
-                _ora_api_service_ora_api_service__WEBPACK_IMPORTED_MODULE_6__["OraAPIService"],
+                { provide: _app_services_async_services_iapi_service__WEBPACK_IMPORTED_MODULE_11__["API_SERVICE"], useClass: apiServiceClass },
                 _message_service_message_service__WEBPACK_IMPORTED_MODULE_7__["MessageService"],
                 _http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_8__["HttpCancelService"]
             ]
@@ -1217,9 +1320,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var jwt_decode__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jwt-decode */ "./node_modules/jwt-decode/lib/index.js");
-/* harmony import */ var jwt_decode__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jwt_decode__WEBPACK_IMPORTED_MODULE_2__);
-
 
 
 var AuthService = /** @class */ (function () {
@@ -1237,13 +1337,16 @@ var AuthService = /** @class */ (function () {
         this.bearerToken = '';
     };
     AuthService.prototype.getTokenExpirationDate = function (token) {
-        var decoded = jwt_decode__WEBPACK_IMPORTED_MODULE_2__(token);
-        if (decoded.exp === undefined) {
-            return null;
-        }
-        var date = new Date(0);
-        date.setUTCSeconds(decoded.exp);
-        return date;
+        // const decoded: any = JWT(token);
+        //
+        // if (decoded.exp === undefined) {
+        //     return null;
+        // }
+        //
+        // const date = new Date(0);
+        // date.setUTCSeconds(decoded.exp);
+        // return date;
+        return new Date();
     };
     AuthService.prototype.isTokenExpired = function (token) {
         if (!token) {
@@ -1370,60 +1473,53 @@ var HttpInterceptorService = /** @class */ (function () {
         });
     }
     HttpInterceptorService.prototype.intercept = function (request, next) {
-        var _this = this;
         var timeout = Number(request.headers.get('timeout')) || defaultTimeout;
-        var notification = request.headers.get('notification') || '';
+        // const notification = request.headers.get('notification') || '';
         // notification header is used for tracking long running requests
-        if (notification) {
-            this.notificationMap[request.url] = notification;
-            this.messageService.broadcast('http', { action: 'start', api: notification });
-        }
+        // if (notification) {
+        //     this.notificationMap[request.url] = notification;
+        //     this.messageService.broadcast('http', {action: 'start', api: notification});
+        // }
         if (this.authToken) {
             request = request.clone({ headers: request.headers.set('Authorization', this.authToken) });
-        }
-        else {
-            var uri = new URL(request.url);
-            if (!uri.pathname.startsWith('./assets/i18n')) {
-                if (this.uriWhitelist.indexOf(uri.pathname) === -1) {
-                    this.events.publish('session:expired');
-                    return rxjs__WEBPACK_IMPORTED_MODULE_5__["EMPTY"];
-                }
-            }
         }
         if (!request.headers.has('Content-Type')) {
             request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
         }
-        var apiErr = new TimeoutError('timeout error', request.url);
-        if (!request.headers.has('Authorization')) {
-            console.log("no authorization header on " + request.url);
-        }
+        // const apiErr = new TimeoutError('timeout error', request.url);
+        // if (!request.headers.has('Authorization')) {
+        //     console.log(`no authorization header on ${request.url}`);
+        // }
         // response inteceptor
-        return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["takeUntil"])(this.httpCancelService.onCancelPendingRequests()), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["timeoutWith"])(timeout, Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(apiErr)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (event) {
+        return next.handle(request).pipe(
+        // takeUntil(this.httpCancelService.onCancelPendingRequests()),
+        // timeoutWith(timeout, throwError(apiErr)),
+        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (event) {
             if (event instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpResponse"]) {
                 // placeholder for examining http response
-                if (_this.notificationMap[event.url]) {
-                    _this.messageService.broadcast('http', { action: 'done', api: _this.notificationMap[event.url] });
-                }
+                // if (this.notificationMap[event.url]) {
+                //     this.messageService.broadcast('http', {action: 'done', api: this.notificationMap[event.url]});
+                // }
+                console.log("http response event " + event);
             }
-        }), 
-        // @ts-ignore
-        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (err) {
-            if (_this.notificationMap[err.url]) {
-                var errMsg = err.message;
-                if (err.status === 401) {
-                    errMsg = 'Unauthorized, you must login again';
-                }
-                _this.messageService.broadcast('http', {
-                    action: 'error',
-                    api: _this.notificationMap[err.url],
-                    err: errMsg
-                });
-            }
-            if (err.status === 401) {
-                _this.events.publish('session:expired');
-                _this.router.navigate(['login']);
-            }
-            Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(err);
+            return event;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (err) {
+            // if (this.notificationMap[err.url]) {
+            // let errMsg = err.message;
+            // if (err.status === 401) {
+            //     errMsg = 'Unauthorized, you must login again';
+            // }
+            // this.messageService.broadcast('http', {
+            //     action: 'error',
+            //     api: this.notificationMap[err.url],
+            //     err: errMsg
+            // });
+            // }
+            // if (err.status === 401) {
+            // this.events.publish('session:expired');
+            // this.router.navigate(['login']);
+            // }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["throwError"])(err);
         }));
     };
     HttpInterceptorService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -1437,6 +1533,23 @@ var HttpInterceptorService = /** @class */ (function () {
     return HttpInterceptorService;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/services/async-services/iapi.service.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/services/async-services/iapi.service.ts ***!
+  \*********************************************************/
+/*! exports provided: API_SERVICE */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_SERVICE", function() { return API_SERVICE; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+var API_SERVICE = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('api.service');
 
 
 /***/ }),
@@ -1484,6 +1597,398 @@ var MessageService = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
     ], MessageService);
     return MessageService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/async-services/mock-api-service/mock.api.service.ts":
+/*!******************************************************************************!*\
+  !*** ./src/app/services/async-services/mock-api-service/mock.api.service.ts ***!
+  \******************************************************************************/
+/*! exports provided: MockApiService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MockApiService", function() { return MockApiService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _sandboxes_user_sandbox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../sandboxes/user.sandbox */ "./src/app/services/sandboxes/user.sandbox.ts");
+
+
+
+
+
+
+var MockApiService = /** @class */ (function () {
+    function MockApiService(http, userSandbox) {
+        var _this = this;
+        this.http = http;
+        this.userSandbox = userSandbox;
+        this.baseUrl = '';
+        this.basePort = 0;
+        this.userId = '';
+        this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].oraBaseUrl;
+        this.basePort = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].oraPort;
+        this.userSandbox.userId$.subscribe(function (id) {
+            _this.userId = id;
+        });
+    }
+    MockApiService.prototype.setBaseUrl = function (baseUrl) {
+        this.baseUrl = baseUrl;
+    };
+    MockApiService.prototype.setBasePort = function (basePort) {
+        this.basePort = basePort;
+    };
+    MockApiService.prototype.login = function (email, password) {
+        if (email === 'merchant@777.io') {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({ 'applicationId': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoibWVyY2hhbnQiLCJfaWQiOiI1Yzg5Yzg1NzYxOTFjODAwMGYyMWNiMjIiLCJjb21wYW55TmFtZSI6IkJvYnMgU21va2UgRW1wb3JpdW0iLCJlbWFpbCI6Im1lcmNoYW50QDc3Ny5pbyIsInBhc3N3b3JkIjoiIiwiX192IjowLCJpYXQiOjE1NTQ0Mjc2ODksImV4cCI6MTU1NjExMDM4MCwianRpIjoiY2RjYTFiNDktMGNhMC00NmU3LTkzODgtY2JmNzM1ODkyZjNjIn0.4TLh-Bnw4kCguJ19ujcnFgJwh95zC7C92oR-ajU59qo' });
+        }
+        else {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({ 'applicationId': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoidXNlciIsIl9pZCI6IjVjODljODU3NjE5MWM4MDAwZjIxY2IyMyIsImVtYWlsIjoidXNlckA3NzcuaW8iLCJwYXNzd29yZCI6IiIsIl9fdiI6MCwiaWF0IjoxNTU0NDI3Njg5LCJleHAiOjE1NTYwNzI1MjksImp0aSI6ImQwNTgxYjAxLWY4ZmEtNDZkMi05YzdhLTI3ODIxYTQ2YWU5MyJ9.nmeuOgJk2QmxHMKTxy51HScOZ2fjF3oKPaLo5T94qLo' });
+        }
+    };
+    MockApiService.prototype.logout = function () {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({});
+    };
+    MockApiService.prototype.register = function (body) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({ 'applicationId': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoibWVyY2hhbnQiLCJfaWQiOiI1Yzg5Yzg1NzYxOTFjODAwMGYyMWNiMjIiLCJjb21wYW55TmFtZSI6IkJvYnMgU21va2UgRW1wb3JpdW0iLCJlbWFpbCI6Im1lcmNoYW50QDc3Ny5pbyIsInBhc3N3b3JkIjoiIiwiX192IjowLCJpYXQiOjE1NTQ0Mjc2ODksImV4cCI6MTU1NjExMDM4MCwianRpIjoiY2RjYTFiNDktMGNhMC00NmU3LTkzODgtY2JmNzM1ODkyZjNjIn0.4TLh-Bnw4kCguJ19ujcnFgJwh95zC7C92oR-ajU59qo' });
+    };
+    MockApiService.prototype.newCatalog = function (body) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+            '_id': '5ca6b3554f3d03000f4b3781',
+            'name': '5c89c8576191c8000f21cb22-PRODUCT_CATALOGUE-2db6bd5f-270e-4007-a0f4-90153c6e01fd',
+            'created': '2019-04-05T01:45:57.427Z',
+            'lastUpdate': '2019-04-05T01:45:57.427Z',
+            'numItems': 0
+        });
+    };
+    MockApiService.prototype.updateCatalog = function (body) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+            '_id': '5ca6b46a4f3d03000f4b3782',
+            'name': '5c89c8576191c8000f21cb22-PRODUCT_CATALOGUE-bc81faf0-4896-4ee6-8e51-2d4375cd975d',
+            'created': '2019-04-05T01:50:34.337Z',
+            'lastUpdate': '2019-04-05T01:50:34.337Z',
+            'numItems': 0
+        });
+    };
+    MockApiService.prototype.getAllCatalogs = function () {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])([
+            {
+                'numItems': 4,
+                'active': true,
+                '_id': '5c946c1f321bbc000f8a52ad',
+                'name': 'Tickets',
+                'icon': 'ticket-alt',
+                'merchantId': '5c89c8576191c8000f21cb22',
+                'created': '2019-03-22T05:01:19.569Z',
+                'lastUpdate': '2019-03-22T05:01:19.569Z',
+                '__v': 0
+            },
+            {
+                'numItems': 5,
+                'active': true,
+                '_id': '5c946c1f321bbc000f8a52ae',
+                'name': 'Food',
+                'icon': 'pizza-slice',
+                'merchantId': '5c89c8576191c8000f21cb22',
+                'created': '2019-03-22T05:01:19.569Z',
+                'lastUpdate': '2019-03-22T05:01:19.569Z',
+                '__v': 0
+            },
+            {
+                'numItems': 4,
+                'active': true,
+                '_id': '5c946c1f321bbc000f8a52af',
+                'name': 'Donate',
+                'icon': 'hand-holding-usd',
+                'merchantId': '5c89c8576191c8000f21cb22',
+                'created': '2019-03-22T05:01:19.569Z',
+                'lastUpdate': '2019-03-22T05:01:19.569Z',
+                '__v': 0
+            },
+            {
+                'numItems': 4,
+                'active': true,
+                '_id': '5c946c1f321bbc000f8a52b0',
+                'name': 'Goods',
+                'icon': 'shopping-cart',
+                'merchantId': '5c89c8576191c8000f21cb22',
+                'created': '2019-03-22T05:01:19.569Z',
+                'lastUpdate': '2019-03-22T05:01:19.569Z',
+                '__v': 0
+            },
+        ]);
+    };
+    MockApiService.prototype.getCatalog = function (id) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+            '_id': '5ca6b3554f3d03000f4b3781',
+            'name': '5c89c8576191c8000f21cb22-PRODUCT_CATALOGUE-2db6bd5f-270e-4007-a0f4-90153c6e01fd',
+            'created': '2019-04-05T01:45:57.427Z',
+            'lastUpdate': '2019-04-05T01:45:57.427Z',
+            '__v': 0
+        });
+    };
+    MockApiService.prototype.deleteOneCatalog = function (id) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+            '_id': '5ca6b3554f3d03000f4b3781',
+            'name': '5c89c8576191c8000f21cb22-PRODUCT_CATALOGUE-2db6bd5f-270e-4007-a0f4-90153c6e01fd',
+            'created': '2019-04-05T01:45:57.427Z',
+            'lastUpdate': '2019-04-05T01:45:57.427Z',
+            '__v': 0
+        });
+    };
+    MockApiService.prototype.newItem = function (body) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+            'catalogues': [],
+            '_id': '5c8e97d2bea4be7f2fda983f',
+            'merchantId': '5c93bd32833c46000fc64b35',
+            'upc': '4026279975753',
+            'name': 'Mf kipnuggets 3900g AKTIE!!!!!',
+            'description': 'Costco size Mf kipnuggets 3900g AKTIE!!!!',
+            'cost': 0,
+            'retail': 1.49,
+            '__v': 0
+        });
+    };
+    MockApiService.prototype.updateItem = function (body) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+            'catalogues': [],
+            '_id': '5c8e97d2bea4be7f2fda983f',
+            'merchantId': '5c93bd32833c46000fc64b35',
+            'upc': '4026279975753',
+            'name': 'Mf kipnuggets 3900g AKTIE!!!!!',
+            'description': 'Costco size Mf kipnuggets 3900g AKTIE!!!!',
+            'cost': 0,
+            'retail': 1.49,
+            '__v': 0
+        });
+    };
+    MockApiService.prototype.getAllItems = function () {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])([]);
+    };
+    MockApiService.prototype.getCatalogItems = function (catalogId) {
+        switch (catalogId) {
+            case '5c946c1f321bbc000f8a52ad': // Tickets
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])([
+                    {
+                        '_id': '5c8e97d2bea4be7f2fda983e',
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Event Ticket - All Weekend',
+                        'description': 'Weekend pass to all the events, music and more',
+                        'cost': 0,
+                        'retail': 15,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Event Ticket - Friday Night',
+                        'description': 'Friday Night only pass to all the events, music and more',
+                        'cost': 0,
+                        'retail': 10,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Event Ticket - Saturday',
+                        'description': 'Saturday only pass to all the events, music and more',
+                        'cost': 0,
+                        'retail': 10,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Event Ticket - Sunday',
+                        'description': 'Sunday only pass to all the events, music and more',
+                        'cost': 0,
+                        'retail': 10,
+                        '__v': 0
+                    }
+                ]);
+            case '5c946c1f321bbc000f8a52ae': // Food
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])([
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Coffee',
+                        'description': 'Coffee from Hot Coffee Truck',
+                        'cost': 0,
+                        'retail': 3.50,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Donut of the day',
+                        'description': 'Hot fresh donut from Hot Coffee Truck',
+                        'cost': 0,
+                        'retail': 10,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Falafel and Shake',
+                        'description': 'Falafel and a banana milk shake from The Falafel Guys',
+                        'cost': 0,
+                        'retail': 10,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Gyro Sandwich',
+                        'description': 'Gyro on Pita from The Falafel Guys',
+                        'cost': 0,
+                        'retail': 10,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Kombucha',
+                        'description': 'Fermented, slightly alcoholic, lightly effervescent, sweetened lemon tea',
+                        'cost': 0,
+                        'retail': 10,
+                        '__v': 0
+                    }
+                ]);
+            case '5c946c1f321bbc000f8a52af': // donate
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])([
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Event Supporter',
+                        'description': 'Event Supporter entitles you to entrance to the after event',
+                        'cost': 0,
+                        'retail': 100,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Silver Supporter',
+                        'description': 'Silver Supporter entitles you to dinner and the after event',
+                        'cost': 0,
+                        'retail': 1000,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Gold Supporter',
+                        'description': 'Silver Supporter entitles you and a guest to vip dinner and the after event',
+                        'cost': 0,
+                        'retail': 5000,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Platinum Supporter',
+                        'description': 'Platinum Supporter entitles you to a vip table and more',
+                        'cost': 0,
+                        'retail': 10000,
+                        '__v': 0
+                    },
+                ]);
+            case '5c946c1f321bbc000f8a52b0': // goods
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])([
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Tegridy Farms T-Shirt - Small',
+                        'description': 'Tegridy Farms Unisex T-Shirt',
+                        'cost': 0,
+                        'retail': 20,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Tegridy Farms T-Shirt - Medium',
+                        'description': 'Tegridy Farms Unisex T-Shirt',
+                        'cost': 0,
+                        'retail': 20,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Tegridy Farms T-Shirt - Large',
+                        'description': 'Tegridy Farms Unisex T-Shirt',
+                        'cost': 0,
+                        'retail': 20,
+                        '__v': 0
+                    },
+                    {
+                        'merchantId': '5c89c8576191c8000f21cb22',
+                        'upc': '4026279970055',
+                        'name': 'Tegridy Farms T-Shirt - XLarge',
+                        'description': 'Tegridy Farms Unisex T-Shirt',
+                        'cost': 0,
+                        'retail': 25,
+                        '__v': 0
+                    },
+                ]);
+                break;
+            default:
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])([]);
+        }
+    };
+    MockApiService.prototype.deleteOneItem = function (id) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+            'catalogues': [],
+            '_id': '5c8e97d2bea4be7f2fda983f',
+            'merchantId': '5c93bd32833c46000fc64b35',
+            'upc': '4026279975753',
+            'name': 'Mf kipnuggets 3900g AKTIE!!!!!',
+            'description': 'Costco size Mf kipnuggets 3900g AKTIE!!!!',
+            'cost': 0,
+            'retail': 1.49,
+            '__v': 0
+        });
+    };
+    MockApiService.prototype.getItemFromUPC = function (code) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({
+            'catalogues': [],
+            '_id': '5c8e97d2bea4be7f2fda983f',
+            'merchantId': '5c93bd32833c46000fc64b35',
+            'upc': '4026279975753',
+            'name': 'Mf kipnuggets 3900g AKTIE!!!!!',
+            'description': 'Costco size Mf kipnuggets 3900g AKTIE!!!!',
+            'cost': 0,
+            'retail': 1.49,
+            '__v': 0
+        });
+    };
+    MockApiService.prototype.handleError = function (operation) {
+        return function (err) {
+            var errMsg = "error in " + operation + "()";
+            if (err instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpErrorResponse"]) {
+                errMsg = "error: " + operation + " " + err.status + ", " + err.statusText;
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(errMsg);
+        };
+    };
+    MockApiService.prototype.fullUrl = function (apiPath, value) {
+        return this.baseUrl + String(this.basePort) + apiPath + (value ? value : '');
+    };
+    MockApiService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+            _sandboxes_user_sandbox__WEBPACK_IMPORTED_MODULE_5__["UserSandbox"]])
+    ], MockApiService);
+    return MockApiService;
 }());
 
 
@@ -1545,6 +2050,7 @@ var OraAPIService = /** @class */ (function () {
         return this.baseUrl + String(this.basePort) + apiPath + (value ? value : '');
     };
     OraAPIService.prototype.login = function (email, password) {
+        console.log(this.fullUrl('/login'));
         return this.http.post(this.fullUrl('/login'), {
             email: email,
             password: password
@@ -1782,8 +2288,9 @@ var CatalogSandbox = /** @class */ (function (_super) {
         var currentCatalog = state.catalogs[index];
         this.appState$.dispatch(_store__WEBPACK_IMPORTED_MODULE_4__["setCurrentCatalog"](currentCatalog));
     };
-    CatalogSandbox.prototype.setCurrentCatatlog = function (catalog) {
+    CatalogSandbox.prototype.setCurrentCatalog = function (catalog) {
         this.appState$.dispatch(_store__WEBPACK_IMPORTED_MODULE_4__["setCurrentCatalog"](catalog));
+        this.appState$.dispatch(_store__WEBPACK_IMPORTED_MODULE_4__["getAllItemsForCatalogRequest"](catalog._id));
     };
     CatalogSandbox.prototype.getCatalogs = function () {
         this.appState$.dispatch(_store__WEBPACK_IMPORTED_MODULE_4__["getAllCatalogRequest"]());
@@ -2473,7 +2980,7 @@ var GET_ALL_CATALOG_ITEMS_REQUEST = '[Item] request get all for catalog';
 var GET_ALL_CATALOG_ITEMS_SUCCESS = '[Item] get all for catalog success';
 var GET_ALL_CATALOG_ITEMS_FAILURE = '[Item] get all for catalog  failure';
 var getAllItemsForCatalogRequest = Object(_base_actions__WEBPACK_IMPORTED_MODULE_0__["makeActionCreator"])(GET_ALL_CATALOG_ITEMS_REQUEST, 'id');
-var getAllItemsForCatalogSuccess = Object(_base_actions__WEBPACK_IMPORTED_MODULE_0__["makeActionCreator"])(GET_ALL_CATALOG_ITEMS_SUCCESS, 'getAllItemsForCatalogResponse');
+var getAllItemsForCatalogSuccess = Object(_base_actions__WEBPACK_IMPORTED_MODULE_0__["makeActionCreator"])(GET_ALL_CATALOG_ITEMS_SUCCESS, 'items');
 var getAllItemsForCatalogFailure = Object(_base_actions__WEBPACK_IMPORTED_MODULE_0__["makeActionCreator"])(GET_ALL_CATALOG_ITEMS_FAILURE, 'error');
 var SET_CURRENT_ITEM = '[Item] set current item';
 var setCurrentItem = Object(_base_actions__WEBPACK_IMPORTED_MODULE_0__["makeActionCreator"])(SET_CURRENT_ITEM, 'item');
@@ -2548,13 +3055,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
-/* harmony import */ var _services_async_services_ora_api_service_ora_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/async-services/ora-api-service/ora.api.service */ "./src/app/services/async-services/ora-api-service/ora.api.service.ts");
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions */ "./src/app/store/actions/index.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/async-services/auth-service/auth.service */ "./src/app/services/async-services/auth-service/auth.service.ts");
-/* harmony import */ var _services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../services/async-services/http-cancel-service/http-cancel.service */ "./src/app/services/async-services/http-cancel-service/http-cancel.service.ts");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions */ "./src/app/store/actions/index.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/async-services/auth-service/auth.service */ "./src/app/services/async-services/auth-service/auth.service.ts");
+/* harmony import */ var _services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/async-services/http-cancel-service/http-cancel.service */ "./src/app/services/async-services/http-cancel-service/http-cancel.service.ts");
+/* harmony import */ var _app_services_async_services_iapi_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @app/services/async-services/iapi.service */ "./src/app/services/async-services/iapi.service.ts");
 
 
 
@@ -2564,6 +3071,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// @ts-ignore
 
 var CatalogEffects = /** @class */ (function () {
     function CatalogEffects(actions$, oraService, injector, appState$) {
@@ -2573,22 +3081,25 @@ var CatalogEffects = /** @class */ (function () {
         this.injector = injector;
         this.appState$ = appState$;
         this.newCatalogRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["NEW_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.newCatalog({ name: action.name })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["newCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["NEW_CATALOG_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["NEW_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.newCatalog({ name: action.name })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["newCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["NEW_CATALOG_FAILURE"], e)); })); }));
         this.updateCatalogRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["UPDATE_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.updateCatalog(action.id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["updateCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["UPDATE_CATALOG_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["UPDATE_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.updateCatalog(action.id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["updateCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["UPDATE_CATALOG_FAILURE"], e)); })); }));
         this.deleteCatalogRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["DELETE_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.deleteOneCatalog(action.id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["deleteCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["DELETE_CATALOG_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["DELETE_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.deleteOneCatalog(action.id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["deleteCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["DELETE_CATALOG_FAILURE"], e)); })); }));
         this.getOneCatalogRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ONE_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.getCatalog(action.id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["getOneCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ONE_CATALOG_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ONE_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.getCatalog(action.id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["getOneCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ONE_CATALOG_FAILURE"], e)); })); }));
         this.getAllCatalogRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ALL_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function () { return _this.oraService.getAllCatalogs()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["getAllCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ALL_CATALOG_FAILURE"], e)); })); }));
-        this.authService = this.injector.get(_services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_8__["AuthService"]);
-        this.httpCancelService = this.injector.get(_services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_9__["HttpCancelService"]);
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_CATALOG_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function () { return _this.oraService.getAllCatalogs()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (catalog) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["getAllCatalogSuccess"](catalog)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_CATALOG_FAILURE"], e)); })); }));
+        this.setCurrentCatalogRequest$ = this.actions$
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_CATALOG_ITEMS_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.getCatalogItems(action.id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (items) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["getAllItemsForCatalogSuccess"](items)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_CATALOG_ITEMS_FAILURE"], e)); })); }));
+        this.authService = this.injector.get(_services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_7__["AuthService"]);
+        this.httpCancelService = this.injector.get(_services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_8__["HttpCancelService"]);
     }
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Effect"])(),
@@ -2610,14 +3121,15 @@ var CatalogEffects = /** @class */ (function () {
         Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Effect"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
     ], CatalogEffects.prototype, "getAllCatalogRequest$", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Effect"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], CatalogEffects.prototype, "setCurrentCatalogRequest$", void 0);
     CatalogEffects = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-            providedIn: 'root',
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"],
-            _services_async_services_ora_api_service_ora_api_service__WEBPACK_IMPORTED_MODULE_3__["OraAPIService"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
-            _ngrx_store__WEBPACK_IMPORTED_MODULE_4__["Store"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_app_services_async_services_iapi_service__WEBPACK_IMPORTED_MODULE_9__["API_SERVICE"])),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
+            _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]])
     ], CatalogEffects);
     return CatalogEffects;
 }());
@@ -2668,13 +3180,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
-/* harmony import */ var _services_async_services_ora_api_service_ora_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/async-services/ora-api-service/ora.api.service */ "./src/app/services/async-services/ora-api-service/ora.api.service.ts");
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../actions */ "./src/app/store/actions/index.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/async-services/auth-service/auth.service */ "./src/app/services/async-services/auth-service/auth.service.ts");
-/* harmony import */ var _services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../services/async-services/http-cancel-service/http-cancel.service */ "./src/app/services/async-services/http-cancel-service/http-cancel.service.ts");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions */ "./src/app/store/actions/index.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/async-services/auth-service/auth.service */ "./src/app/services/async-services/auth-service/auth.service.ts");
+/* harmony import */ var _services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/async-services/http-cancel-service/http-cancel.service */ "./src/app/services/async-services/http-cancel-service/http-cancel.service.ts");
+/* harmony import */ var _app_services_async_services_iapi_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @app/services/async-services/iapi.service */ "./src/app/services/async-services/iapi.service.ts");
 
 
 
@@ -2684,6 +3196,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// @ts-ignore
 
 var ItemEffects = /** @class */ (function () {
     function ItemEffects(actions$, oraService, injector, appState$) {
@@ -2693,25 +3206,25 @@ var ItemEffects = /** @class */ (function () {
         this.injector = injector;
         this.appState$ = appState$;
         this.newItemRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["NEW_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.newItem(action.newItemRequest)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["newItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ALL_CATALOG_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["NEW_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.newItem(action.newItemRequest)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["newItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_CATALOG_FAILURE"], e)); })); }));
         this.updateItemRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["UPDATE_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.updateItem(action.updateItemRequest)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["updateItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["UPDATE_ITEM_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["UPDATE_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.updateItem(action.updateItemRequest)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["updateItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["UPDATE_ITEM_FAILURE"], e)); })); }));
         this.deleteItemRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["DELETE_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.deleteOneItem(action.id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["deleteItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["DELETE_ITEM_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["DELETE_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.deleteOneItem(action.id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["deleteItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["DELETE_ITEM_FAILURE"], e)); })); }));
         this.getOneItemRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ONE_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.getItemFromUPC(action.code)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["getOneItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ONE_ITEM_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ONE_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.getItemFromUPC(action.code)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["getOneItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ONE_ITEM_FAILURE"], e)); })); }));
         this.getAllItemRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ALL_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.getAllItems()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["getAllItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ALL_ITEM_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_ITEM_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.getAllItems()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (item) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["getAllItemSuccess"](item)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_ITEM_FAILURE"], e)); })); }));
         this.getAllItemsForCatalogRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ALL_CATALOG_ITEMS_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.getCatalogItems(action.id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (items) { return (_actions__WEBPACK_IMPORTED_MODULE_5__["getAllItemsForCatalogSuccess"](items)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_5__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_5__["GET_ALL_CATALOG_ITEMS_FAILURE"], e)); })); }));
-        this.authService = this.injector.get(_services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_8__["AuthService"]);
-        this.httpCancelService = this.injector.get(_services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_9__["HttpCancelService"]);
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_CATALOG_ITEMS_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.getCatalogItems(action.id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (items) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["getAllItemsForCatalogSuccess"](items)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["GET_ALL_CATALOG_ITEMS_FAILURE"], e)); })); }));
+        this.authService = this.injector.get(_services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_7__["AuthService"]);
+        this.httpCancelService = this.injector.get(_services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_8__["HttpCancelService"]);
     }
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Effect"])(),
@@ -2738,13 +3251,10 @@ var ItemEffects = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
     ], ItemEffects.prototype, "getAllItemsForCatalogRequest$", void 0);
     ItemEffects = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-            providedIn: 'root',
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"],
-            _services_async_services_ora_api_service_ora_api_service__WEBPACK_IMPORTED_MODULE_3__["OraAPIService"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
-            _ngrx_store__WEBPACK_IMPORTED_MODULE_4__["Store"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_app_services_async_services_iapi_service__WEBPACK_IMPORTED_MODULE_9__["API_SERVICE"])),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
+            _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]])
     ], ItemEffects);
     return ItemEffects;
 }());
@@ -2766,14 +3276,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
-/* harmony import */ var _services_async_services_ora_api_service_ora_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/async-services/ora-api-service/ora.api.service */ "./src/app/services/async-services/ora-api-service/ora.api.service.ts");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../actions */ "./src/app/store/actions/index.ts");
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/async-services/auth-service/auth.service */ "./src/app/services/async-services/auth-service/auth.service.ts");
-/* harmony import */ var _services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../services/async-services/http-cancel-service/http-cancel.service */ "./src/app/services/async-services/http-cancel-service/http-cancel.service.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../actions */ "./src/app/store/actions/index.ts");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../services/async-services/auth-service/auth.service */ "./src/app/services/async-services/auth-service/auth.service.ts");
+/* harmony import */ var _services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../services/async-services/http-cancel-service/http-cancel.service */ "./src/app/services/async-services/http-cancel-service/http-cancel.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _app_services_async_services_iapi_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @app/services/async-services/iapi.service */ "./src/app/services/async-services/iapi.service.ts");
 
 
 
@@ -2784,6 +3294,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// @ts-ignore
 
 var UserEffects = /** @class */ (function () {
     function UserEffects(actions$, oraService, injector, appState$) {
@@ -2793,20 +3304,20 @@ var UserEffects = /** @class */ (function () {
         this.injector = injector;
         this.appState$ = appState$;
         this.loginRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["USER_LOGIN_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.login(action.email, action.password)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (user) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["userLoginResponse"](user)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["USER_LOGIN_FAILURE"], e)); })); }));
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_3__["USER_LOGIN_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.login(action.email, action.password)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (user) { return (_actions__WEBPACK_IMPORTED_MODULE_3__["userLoginResponse"](user)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_3__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_3__["USER_LOGIN_FAILURE"], e)); })); }));
         this.logoutRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["USER_LOGOUT_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.logout()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (user) {
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_3__["USER_LOGOUT_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.logout()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (user) {
             localStorage.clear();
-            return _actions__WEBPACK_IMPORTED_MODULE_4__["userLogoutSuccess"]();
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["USER_LOGOUT_FAILURE"], e)); })); }));
+            return _actions__WEBPACK_IMPORTED_MODULE_3__["userLogoutSuccess"]();
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_3__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_3__["USER_LOGOUT_FAILURE"], e)); })); }));
         this.registerRequest$ = this.actions$
-            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_4__["USER_REGISTER_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (action) { return _this.oraService.register(action.userRegistrationRequest)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (user) { return (_actions__WEBPACK_IMPORTED_MODULE_4__["userLoginResponse"](user)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_actions__WEBPACK_IMPORTED_MODULE_4__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_4__["USER_REGISTER_FAILURE"], e)); })); }));
-        this.authService = this.injector.get(_services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_8__["AuthService"]);
-        this.httpCancelService = this.injector.get(_services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_9__["HttpCancelService"]);
-        this.location = this.injector.get(_angular_common__WEBPACK_IMPORTED_MODULE_10__["Location"]);
+            .pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_3__["USER_REGISTER_REQUEST"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (action) { return _this.oraService.register(action.userRegistrationRequest)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (user) { return (_actions__WEBPACK_IMPORTED_MODULE_3__["userLoginResponse"](user)); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(_actions__WEBPACK_IMPORTED_MODULE_3__["errorAction"](_actions__WEBPACK_IMPORTED_MODULE_3__["USER_REGISTER_FAILURE"], e)); })); }));
+        this.authService = this.injector.get(_services_async_services_auth_service_auth_service__WEBPACK_IMPORTED_MODULE_7__["AuthService"]);
+        this.httpCancelService = this.injector.get(_services_async_services_http_cancel_service_http_cancel_service__WEBPACK_IMPORTED_MODULE_8__["HttpCancelService"]);
+        this.location = this.injector.get(_angular_common__WEBPACK_IMPORTED_MODULE_9__["Location"]);
     }
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Effect"])(),
@@ -2821,13 +3332,10 @@ var UserEffects = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
     ], UserEffects.prototype, "registerRequest$", void 0);
     UserEffects = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-            providedIn: 'root',
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"],
-            _services_async_services_ora_api_service_ora_api_service__WEBPACK_IMPORTED_MODULE_3__["OraAPIService"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
-            _ngrx_store__WEBPACK_IMPORTED_MODULE_5__["Store"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](1, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_app_services_async_services_iapi_service__WEBPACK_IMPORTED_MODULE_10__["API_SERVICE"])),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_1__["Injector"],
+            _ngrx_store__WEBPACK_IMPORTED_MODULE_4__["Store"]])
     ], UserEffects);
     return UserEffects;
 }());
@@ -3143,7 +3651,8 @@ var initialCatalog = {
     lastUpdate: '',
     numItems: 0,
     active: true,
-    items: []
+    items: [],
+    icon: ''
 };
 var initialState = {
     catalogs: [],
@@ -3238,8 +3747,7 @@ var initialItem = {
     image: 'assets/box-308010.svg',
     cost: 2.50,
     retail: 10.00,
-    merchantId: '',
-    catalogs: []
+    merchantId: ''
 };
 var initialState = {
     items: [],
@@ -3305,23 +3813,22 @@ var UserTypeEnum;
     UserTypeEnum[UserTypeEnum["NONE"] = 2] = "NONE";
 })(UserTypeEnum || (UserTypeEnum = {}));
 function USER_TYPE(type) {
-    if (type === _config_app__WEBPACK_IMPORTED_MODULE_0__["config"].server.user.kind.merchant) {
+    if (type.toLowerCase() === _config_app__WEBPACK_IMPORTED_MODULE_0__["config"].server.user.type.merchant) {
         return UserTypeEnum.MERCHANT;
     }
-    else if (type === _config_app__WEBPACK_IMPORTED_MODULE_0__["config"].server.user.kind.user) {
+    else if (type.toLowerCase() === _config_app__WEBPACK_IMPORTED_MODULE_0__["config"].server.user.type.user) {
         return UserTypeEnum.USER;
     }
     return UserTypeEnum.NONE;
 }
 var initialCurrentUser = {
-    id: "0",
+    id: '0',
     role: UserTypeEnum.MERCHANT,
     firstName: '',
     lastName: '',
     companyName: 'Merchant Store Name',
     email: 'user@orapay.io',
     mobilePhone: '',
-    deviceId: '',
     accessToken: '',
 };
 var initialState = {
@@ -3537,7 +4044,7 @@ function ItemsReducer(state, action) {
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { items: items, loading: false, loaded: true, failed: false, error: '' });
         }
         case _actions__WEBPACK_IMPORTED_MODULE_2__["GET_ALL_CATALOG_ITEMS_SUCCESS"]: {
-            var items = action.getAllItemsForCatalogResponse;
+            var items = action.items;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { items: items, loading: false, loaded: true, failed: false, error: '' });
         }
         case _actions__WEBPACK_IMPORTED_MODULE_2__["GET_ALL_ITEM_SUCCESS"]: {
@@ -3671,13 +4178,12 @@ function UserReducer(state, action) {
             }
             var currentUser = {
                 id: user._id,
-                role: _models_user_model__WEBPACK_IMPORTED_MODULE_1__["USER_TYPE"](user.kind),
+                role: _models_user_model__WEBPACK_IMPORTED_MODULE_1__["USER_TYPE"](user.type),
                 firstName: user.firstName,
                 lastName: user.lastName,
                 companyName: user.companyName,
                 email: user.email,
                 mobilePhone: user.mobilePhone,
-                deviceId: user.devices[0]._id,
                 accessToken: applicationId,
             };
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, state, { loggedIn: true, currentUser: currentUser, loading: false, loaded: true, failed: false });
@@ -3762,6 +4268,17 @@ var OraStoreModule = /** @class */ (function () {
 }());
 
 
+
+/***/ }),
+
+/***/ "./src/assets/i18n/en.json":
+/*!*********************************!*\
+  !*** ./src/assets/i18n/en.json ***!
+  \*********************************/
+/*! exports provided: CATALOGS_PAGE, EDIT_ITEM_PAGE, TABS, ITEMS_PAGE, ITEM_PAGE, LOGIN_PAGE, NEW_CATALOG_PAGE, REGISTER_PAGE, RECEIPTS_PAGE, PROFILE_PAGE, default */
+/***/ (function(module) {
+
+module.exports = {"CATALOGS_PAGE":{"TITLE":"Catalog Managment","NEW":"New Catalog","NUMBER_OF_ITEMS":"Items"},"EDIT_ITEM_PAGE":{"TITLE":"Edit Item","CATAGORIES":"Categories","DESCRIPTION":"Description","COST":"Cost","RETAIL":"Retail","SAVE":"Save","CANCEL":"Cancel"},"TABS":{"TAB_1":"Items","TAB_2":"Receipts","TAB_3":"Profile"},"ITEMS_PAGE":{"FOR":"All Items in","NEW":"New Item"},"ITEM_PAGE":{"COST":"Cost","RETAIL":"Retail"},"LOGIN_PAGE":{"TITLE":"Catera Sign In","EMAIL":"Email","PASSWORD":"Password","SIGN_IN":"Sign In","REGISTER":"Register"},"NEW_CATALOG_PAGE":{"TITLE":"Create a new Catalog","ENTER_NEW_NAME":"Catalog Name","CREATE":"Create Catalog","CANCEL":"Cancel"},"REGISTER_PAGE":{"TITLE":"Register","FIRST_NAME":"First Name","LAST_NAME":"Last Name","EMAIL":"Email address","PASSWORD":"Password","REPEAT_PASSWORD":"Repeat Password","MOBILE_PHONE":"Mobile phone number","COMPANY_NAME":"Company Name (Merchant Account)","AGREE_TO":"By Registering you agree to the ","TERMS":"Terms & Conditions"},"RECEIPTS_PAGE":{"TITLE":"Receipts"},"PROFILE_PAGE":{"TITLE":"Profile"}};
 
 /***/ }),
 
