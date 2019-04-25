@@ -1,0 +1,44 @@
+{
+  "CATALOGS_PAGE": {
+    "TITLE": "Catalogs"
+  },
+  "EDIT_ITEM_PAGE": {
+    "TITLE": "Edit Item",
+    "CATAGORIES": "Categories",
+    "DESCRIPTION": "Description",
+    "COST": "Cost",
+    "RETAIL": "Retail",
+    "SAVE": "Save",
+    "CANCEL": "Cancel"
+  },
+  "ITEM_PAGE": {
+    "COST": "Cost",
+    "RETAIL": "Retail"
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "Orapay Sign In",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "SIGN_IN": "Sign In",
+    "REGISTER": "Register"
+  },
+  "NEW_CATALOG_PAGE": {
+    "TITLE": "Create a new Catalog",
+    "ENTER_NEW_NAME": "Catalog Name",
+    "CREATE": "Create Catalog",
+    "CANCEL": "Cancel"
+  },
+  "REGISTER_PAGE": {
+    "TITLE": "Register",
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "EMAIL": "Email address",
+    "PASSWORD": "Password",
+    "REPEAT_PASSWORD": "Repeat Password",
+    "MOBILE_PHONE": "Mobile phone number",
+    "COMPANY_NAME": "Company Name (Merchant Account)",
+    "AGREE_TO": "By Registering you agree to the ",
+    "TERMS": "Terms & Conditions"
+  }
+
+}
